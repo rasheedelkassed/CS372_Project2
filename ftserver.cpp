@@ -98,6 +98,7 @@ int createSocket(struct addrinfo *res){
 * Connects the socket.
 */
 void connectSocket(int sockfd, struct addrinfo *res){
+	sleep(2);
 	int status;
 	status = connect(sockfd, res->ai_addr, res->ai_addrlen);
 	if(status == -1){

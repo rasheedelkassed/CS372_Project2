@@ -97,7 +97,7 @@ public class ftclient{
 	*/
     private void receiveFileList(int dataPort){
         try{
-			System.out.print("Waiting for connection...");
+			System.out.println("Waiting for connection...");
             listenForConnection(dataPort);
             String receivedData = "";
             this.in = this.dataSocket.getInputStream();
