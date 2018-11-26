@@ -1,18 +1,19 @@
 /**
 * Author: Rasheed El Kassed
-* Last Modified: 10/27/2018
+* Last Modified: 11/25/2018
 * OSU email address: elkasser@oregonstate.edu
 * Course number/section: CS372_400
-* Project Number 2                
+* Project Number: 2                
 * Due Date: 11/25/2018
-* Description: TODO
+* Description: A file transfer server that receives a command and a port number and uses that to either send
+* a file directory back or an actual text file back. Files sent using this program must have the .txt extension.
 *
 * Heavily influenced by Beej's Guide to Network Programming. It's essentially a modularized
 * version of the "A Simple Stream Server" example modified to send txt files and text instead
 * of just text.
 *
-* Lots of repeat functions taken from the chatclient.cpp file from last project. Some are slightly
-* modified.
+* Lots of repeat functions taken from the chatclient.cpp file from project 1. Some are slightly
+* modified versions of previous code from project 1.
 */
 
 #include <string.h>
@@ -42,7 +43,7 @@ void *get_in_addr(struct sockaddr *sa){
 
 
 /**
-* Returns a linked list with the host address and a port
+* Returns a linked list with the host address and a port.
 */
 struct addrinfo* createAddressInfo(char *port){
 	struct addrinfo hints;
@@ -63,7 +64,7 @@ struct addrinfo* createAddressInfo(char *port){
 }
 
 /**
-* Returns a linked list with an address and a port
+* Returns a linked list with an address and a port.
 */
 struct addrinfo* createAddressInfo(char *input_addr, char *port){
 	struct addrinfo hints;
@@ -83,7 +84,7 @@ struct addrinfo* createAddressInfo(char *input_addr, char *port){
 }
 
 /**
-* Creats a socket using and address and port paired within a linked list
+* Creats a socket using and address and port paired within a linked list.
 */
 int createSocket(struct addrinfo *res){
 	int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
@@ -94,7 +95,7 @@ int createSocket(struct addrinfo *res){
 }
 
 /**
-* Connects the socket
+* Connects the socket.
 */
 void connectSocket(int sockfd, struct addrinfo *res){
 	int status;
@@ -104,6 +105,9 @@ void connectSocket(int sockfd, struct addrinfo *res){
 	}
 }
 
+/**
+* Binds the provided socket.
+*/
 void bindSocket(int sockfd, struct addrinfo *serverinfo){
 	int status = bind(sockfd, serverinfo->ai_addr, serverinfo->ai_addrlen);
 	if(status == -1){
@@ -122,6 +126,9 @@ void listenSocket(int sockfd){
 	}
 }
 
+/**
+* Sends the file directory the program is in through datasockfd.
+*/
 //https://www.geeksforgeeks.org/c-program-list-files-sub-directories-directory/
 void sendFileList(int datasockfd, char address[], char dataPort[]){
 	char fileList[1024];
@@ -146,6 +153,9 @@ void sendFileList(int datasockfd, char address[], char dataPort[]){
     return; 
 }
 
+/**
+* Sends the specified file in chunks through datasockfd.
+*/
 //http://www.cplusplus.com/reference/cstdio/fopen/
 //https://www.tutorialspoint.com/c_standard_library/c_function_fopen.htm
 void sendFile(int datasockfd, char filename[], char address[], char dataPort[]){
@@ -168,11 +178,9 @@ void sendFile(int datasockfd, char filename[], char address[], char dataPort[]){
 	
 }
 
-//void sendError(){
-//	
-//}
-
-
+/**
+* This is the bulk of the program. Uses the connection to send and receive data through various created sockets.
+*/
 //Almost straight out of Beej's guide
 void useConnection(int sockfd){
 	struct sockaddr_storage their_addr;
@@ -251,8 +259,12 @@ void useConnection(int sockfd){
 	}	
 }
 
+/**
+* Calls all the above functions and then closes the sockets.
+* This will never return as long as no errors occur.
+*/
 int main(int argCount, char *address[]){
-	struct addrinfo *serverinfo = createAddressInfo(address[1]); //Create server socket
+	struct addrinfo *serverinfo = createAddressInfo(address[1]);
 	int serversockfd = createSocket(serverinfo);
 	bindSocket(serversockfd, serverinfo);
 	listenSocket(serversockfd);
