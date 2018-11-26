@@ -198,9 +198,6 @@ public class ftclient{
             }else{
                 System.out.println("Incorrect number of arguments.");
             }
-            //ftclient client = new ftclient(args[0], Integer.parseInt(args[1]));
-            //ftclient client1 = new ftclient("127.0.0.1", 25000, "-l", 14643);
-            //ftclient client2 = new ftclient("127.0.0.1", 25000, "-g", 14643, "fiename.txt");
         }catch(NumberFormatException e){
             System.out.println(e.getMessage());
         }
