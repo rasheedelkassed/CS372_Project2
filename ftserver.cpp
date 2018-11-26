@@ -228,13 +228,9 @@ void useConnection(int sockfd){
 		if(strncmp(command, "-l", 2) == 0){
 			printf("List directory requested on port %s\n", dataPort);
 			struct addrinfo *datainfo = createAddressInfo(s, dataPort);
-			printf("addrinfo created...\n");
 			int datasockfd = createSocket(datainfo);
-			printf("datasockfd created...\n");
 			connectSocket(datasockfd, datainfo);
-			printf("socket connected...\n");
 			sendFileList(datasockfd, s, dataPort);
-			printf("file list sent..\n");
 			close(datasockfd);
 			freeaddrinfo(datainfo);
 		//If the client asked to get a file, get the filename and then send if it exists
