@@ -98,7 +98,7 @@ int createSocket(struct addrinfo *res){
 * Connects the socket.
 */
 void connectSocket(int sockfd, struct addrinfo *res){
-	sleep(2);
+	sleep(1); //C outpaces java on runtime. Needs to wait for java to catch up.
 	int status;
 	status = connect(sockfd, res->ai_addr, res->ai_addrlen);
 	if(status == -1){
