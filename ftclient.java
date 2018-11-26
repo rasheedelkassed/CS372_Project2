@@ -192,16 +192,13 @@ public class ftclient{
     //args = {address, serverPort, command, fileName, dataPort}
     public static void main(String[] args) {
         try{
-            //if(args.length == 4){
-            //    ftclient client = new ftclient(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
-            //}else if(args.length == 5){
-            //    ftclient client = new ftclient(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]), args[4]);
-            //}else{
-            //    System.out.println("Incorrect number of arguments.");
-            //}
-			//Tests with static inputs...
-            ftclient client1 = new ftclient("flip3.engr.oregonstate.edu", 25000, "-l", 14643);
-            //ftclient client2 = new ftclient("127.0.0.1", 25000, "-g", 14643, "fiename.txt");
+            if(args.length == 4){
+                ftclient client = new ftclient(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
+            }else if(args.length == 5){
+                ftclient client = new ftclient(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]), args[4]);
+            }else{
+                System.out.println("Incorrect number of arguments.");
+            }
         }catch(NumberFormatException e){
             System.out.println(e.getMessage());
         }

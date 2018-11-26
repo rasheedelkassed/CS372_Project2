@@ -98,7 +98,7 @@ int createSocket(struct addrinfo *res){
 * Connects the socket.
 */
 void connectSocket(int sockfd, struct addrinfo *res){
-	sleep(1); //C outpaces java on runtime. Needs to wait for java to catch up.
+	sleep(1); //C++ outpaces java on runtime when on the flip servers. Needs to wait for java to catch up.
 	int status;
 	status = connect(sockfd, res->ai_addr, res->ai_addrlen);
 	if(status == -1){
@@ -180,7 +180,7 @@ void sendFile(int datasockfd, char filename[], char address[], char dataPort[]){
 }
 
 /**
-* This is the bulk of the program. Uses the connection to send and receive data through various created sockets.
+* This is the bulk of the program. Uses the created connection to send and receive data through various created sockets.
 */
 //Almost straight out of Beej's guide
 void useConnection(int sockfd){
