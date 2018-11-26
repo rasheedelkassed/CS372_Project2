@@ -203,6 +203,7 @@ void useConnection(int sockfd){
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s); //From Beej's guide
 		printf("Connection from %s\n", s);
 		
+		//First, get the command
 		int commandStatus = recv(new_fd, command, 3, 0);
 		if (commandStatus == -1){
 			fprintf(stderr, "Error receiving data from host\n");
@@ -212,6 +213,7 @@ void useConnection(int sockfd){
 			break;
 		}
 		
+		//Then, get the data port
 		int dataPortStatus = recv(new_fd, dataPort, 6, 0);
 		if (dataPortStatus == -1){
 			fprintf(stderr, "Error receiving data from host\n");
@@ -221,6 +223,7 @@ void useConnection(int sockfd){
 			break;
 		}
 		
+		//If the client asked for a list, send the file list
 		if(strncmp(command, "-l", 2) == 0){
 			printf("List directory requested on port %s\n", dataPort);
 			struct addrinfo *datainfo = createAddressInfo(s, dataPort);
@@ -229,6 +232,7 @@ void useConnection(int sockfd){
 			sendFileList(datasockfd, s, dataPort);
 			close(datasockfd);
 			freeaddrinfo(datainfo);
+		//If the client asked to get a file, get the filename and then send if it exists
 		}else if(strcmp(command, "-g") == 0){
 			char fileName[128];
 			memset(fileName, 0, sizeof(fileName));
